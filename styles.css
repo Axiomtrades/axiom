@@ -371,13 +371,14 @@ body {
 }
 
 /* ===================== */
-/* LOGIN PAGE: signup link fix (scoped) */
+/* LOGIN PAGE: signup link fix (centered) */
 /* ===================== */
 .login-box .signup-text {
-  position: static;       /* override any absolute positioning from other rules */
+  position: static !important;   /* cancel absolute positioning */
   display: block;
-  margin-top: 18px;       /* space below social buttons */
-  text-align: center;
+  margin-top: 18px;
+  width: 100%;                   /* take full width of login box */
+  text-align: center !important; /* force center */
   font-size: 14px;
   color: #ccc;
 }
@@ -390,4 +391,4 @@ body {
 
 .login-box .signup-text a:hover {
   text-decoration: underline;
-  }
+}
