@@ -374,7 +374,7 @@ body {
 /* SIGNUP LINK FIX (LOGIN PAGE) */
 /* ===================== */
 .signup-text {
-  margin-top: 20px;   /* push it down away from Phantom button */
+  margin-top: 5px;   /* push it down away from Phantom button */
   text-align: center; /* keep it centered */
   font-size: 14px;
   color: #ccc;
