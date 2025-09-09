@@ -371,21 +371,23 @@ body {
 }
 
 /* ===================== */
-/* SIGNUP LINK FIX (LOGIN PAGE) */
+/* LOGIN PAGE: signup link fix (scoped) */
 /* ===================== */
-.signup-text {
-  margin-top: 5px;   /* push it down away from Phantom button */
-  text-align: center; /* keep it centered */
+.login-box .signup-text {
+  position: static;       /* override any absolute positioning from other rules */
+  display: block;
+  margin-top: 18px;       /* space below social buttons */
+  text-align: center;
   font-size: 14px;
   color: #ccc;
 }
 
-.signup-text a {
-  color: #4a90e2;     /* make the link blue */
+.login-box .signup-text a {
+  color: #4a90e2;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 600;
 }
 
-.signup-text a:hover {
+.login-box .signup-text a:hover {
   text-decoration: underline;
-}
+  }
