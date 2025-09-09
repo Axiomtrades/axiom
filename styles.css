@@ -371,24 +371,27 @@ body {
 }
 
 /* ===================== */
-/* LOGIN PAGE: signup link fix (centered) */
-/* ===================== */
-.login-box .signup-text {
-  position: static !important;   /* cancel absolute positioning */
-  display: block;
-  margin-top: 18px;
-  width: 100%;                   /* take full width of login box */
-  text-align: center !important; /* force center */
+/* Force center the signup text under login form */
+.login-box p.signup-text {
+  position: relative !important;   /* kill absolute */
+  left: auto !important;
+  top: auto !important;
+  transform: none !important;
+
+  margin: 20px 0 0 0 !important;
+  width: 100% !important;
+  text-align: center !important;
+
   font-size: 14px;
   color: #ccc;
 }
 
-.login-box .signup-text a {
-  color: #4a90e2;
+.login-box p.signup-text a {
+  color: #4a90e2 !important;
   text-decoration: none;
   font-weight: 600;
 }
 
-.login-box .signup-text a:hover {
+.login-box p.signup-text a:hover {
   text-decoration: underline;
 }
