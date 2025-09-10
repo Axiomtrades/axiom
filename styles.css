@@ -39,8 +39,8 @@ body.login-page {
 }
 
 .login-box h2 {
-  margin-bottom: 10px;
-  font-size: 15px;  /* reduced size */
+  margin-bottom: 1px;
+  font-size: 5px;  /* reduced size */
   font-weight: bold;
   color: #fff;
 }
