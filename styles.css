@@ -191,36 +191,6 @@ body.login-page {
   text-decoration: none;
 }
 
-/* ---------------- SIGNUP PAGE (old design kept) ---------------- */
-body.signup-page {
-  background: url('signup-background.jpg') no-repeat center center fixed;
-  background-size: cover;
-  height: 100vh;
-}
-
-.signup-input-container {
-  position: absolute;
-  top: 35%;
-  left: 52%;
-  transform: translate(-50%, -50%);
-  width: 320px;
-}
-
-.signup-input-container .input-box {
-  width: 100%;
-  padding: 12px;
-  margin: 15px 0;
-  border: none;
-  border-bottom: 1px solid #555;
-  background: transparent;
-  color: #fff;
-  font-size: 14px;
-  outline: none;
-}
-
-.signup-input-container .input-box::placeholder {
-  color: #aaa;
-}
 
 .signup-text {
   position: absolute;
