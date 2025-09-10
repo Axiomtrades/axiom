@@ -39,7 +39,11 @@ body.login-page {
 }
 
 .login-box h2 {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  font-size: 15px;  /* reduced size */
+  font-weight: bold;
+  color: #fff;
+}
 }
 
 /* Inputs */
