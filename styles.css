@@ -191,12 +191,26 @@ color: #3b82f6;
 text-decoration: none;
 }
 
-.signup-text {
-position: absolute;
-top: 46%;
-left: 49%;
-transform: translate(-50%, -50%);
+/* ✅ Correct version */
+.login-box p.signup-text {
+  position: relative;
+  margin: 20px 0 0 0;  /* space above it */
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  color: #ccc;
 }
+
+.login-box p.signup-text a {
+  color: #4a90e2;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.login-box p.signup-text a:hover {
+  text-decoration: underline;
+}
+
 
 .signup-text .signup-button {
 text-decoration: none;
